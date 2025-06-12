@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['username'])) {
     // User is already logged in, redirect to welcome page
     header("Location: login.php");

@@ -1,9 +1,6 @@
 <?php
 session_start();
-echo "<script>
-    localStorage.removeItem('musicTime');
-    localStorage.removeItem('musicMuted');
-</script>";
+
 if (isset($_POST['username']) && isset($_POST['password'])) {
     // User is already logged in, redirect to welcome page
     $username = $_POST['username'];
@@ -76,6 +73,10 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         z-index: 1000;
                     }
         </style>
+        <script>
+        localStorage.removeItem('musicTime');
+        localStorage.removeItem('musicMuted');
+    </script>
     </head>
     <body>
         <video autoplay loop muted playsinline style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
