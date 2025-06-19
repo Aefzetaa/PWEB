@@ -58,7 +58,8 @@ if (isset($_POST["nama"]) && isset($_POST["umur"])) {
             background-color: #FF0000;
             cursor: pointer;
         }
-        #mute-button, #pause-button {
+        #mute-button,
+        #pause-button {
             position: fixed;
             right: 20px;
             padding: 10px;
@@ -70,8 +71,12 @@ if (isset($_POST["nama"]) && isset($_POST["umur"])) {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             z-index: 1000;
         }
-        #mute-button { top: 20px; }
-        #pause-button { top: 70px; }
+        #mute-button {
+            top: 20px;
+        }
+        #pause-button {
+            top: 70px;
+        }
     </style>
 </head>
 <body>
@@ -116,25 +121,28 @@ if (isset($_POST["nama"]) && isset($_POST["umur"])) {
                 <td><?php echo $daftar_item["nama"]; ?></td>
                 <td><?php echo $daftar_item["umur"]; ?></td>
                 <td>
-                    <?php
-                        switch (true) {
-                            case ($daftar_item["umur"] >= 0 && $daftar_item["umur"] <= 13):
-                                echo "Anak";
-                                break;
-                            case ($daftar_item["umur"] >= 14 && $daftar_item["umur"] <= 25):
-                                echo "Remaja";
-                                break;
-                            case ($daftar_item["umur"] > 25 && $daftar_item["umur"] <= 40):
-                                echo "Dewasa";
-                                break;
-                            case ($daftar_item["umur"] > 40 && $daftar_item["umur"] <= 60):
-                                echo "Tua";
-                                break;
-                            case ($daftar_item["umur"] > 60):
-                                echo "Lansia";
-                                break;
-                        }
-                    ?>
+                    <?php foreach ($_SESSION["daftar"] as $daftar): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($daftar['nama']); ?></td>
+                            <td><?php echo htmlspecialchars($daftar['umur']); ?></td>
+                            <td>
+                                <?php
+                                    $umur = $daftar['umur'];
+                                    if ($umur <= 10) {
+                                        echo "Anak-anak";
+                                    } elseif ($umur <= 20) {
+                                        echo "Remaja";
+                                    } elseif ($umur <= 40) {
+                                        echo "Dewasa";
+                                    } elseif ($umur < 60) {
+                                        echo "Tua";
+                                    } else {
+                                        echo "Lansia";
+                                    }
+                                ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
