@@ -90,7 +90,7 @@ if(isset($_POST["nama"]) && isset($_POST["umur"])){
     </head>
     <body>
          <video autoplay loop muted playsinline style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
-             <source src="Background/Getrich.mp4" type="video/mp4">
+              <source src="https://cdn.pixabay.com/video/2020/03/13/33628-397860881_large.mp4" type="video/mp4">
          </video>
         <h1 style="color: White; text-shadow: 2px 2px 4px black;">
             <?php echo "Selamat datang " . $_SESSION['username'] . " Ke-" . $_SESSION["counter"] ?></h1>
