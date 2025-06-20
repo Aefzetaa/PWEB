@@ -39,7 +39,7 @@ $target = "dashboard.php";
 
 // Jika ada parameter GET Key (edit mode), isi form dengan data yang ingin diedit
 if (isset($_GET["Key"])) {
-    $target = "Edit.php?Key=" . $_GET["Key"];
+    $target = "Tools/Edit.php?Key=" . $_GET["Key"];
     if ($_GET["Key"] != null) {
         $index = $_GET["Key"];
         $edit_daftar = $_SESSION["daftar"][$index];
@@ -182,7 +182,7 @@ if (isset($_GET["Key"])) {
                 </td>
                 <td style="text-align: center;">
                     <!-- Link hapus -->
-                    <a href="Delete.php?Key=<?php echo $index; ?>" style="color: red; font-size: 20px; text-decoration: none;">X</a>
+                    <a href="Tools/Delete.php?Key=<?php echo $index; ?>" style="color: red; font-size: 20px; text-decoration: none;">X</a>
                 </td>
             </tr>
         <?php endforeach; ?>
