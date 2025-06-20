@@ -54,7 +54,7 @@ if (isset($_GET["Key"])) {
         html, body {
             overflow: hidden; /* ⛔ Mencegah scroll */
         }
-        
+
         /* Style utama halaman */
         body {
             display: flex;
@@ -144,7 +144,7 @@ if (isset($_GET["Key"])) {
             <tr>
                 <td colspan="2" style="text-align: center;">
                     <button type="submit">SUBMIT</button>
-                    <a href="logout.php"><button id="logout" type="button">LOGOUT</button></a>
+                    <a href="Tools/logout.php"><button id="logout" type="button">LOGOUT</button></a>
                 </td>
             </tr>
         </table>
