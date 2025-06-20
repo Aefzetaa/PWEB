@@ -3,8 +3,8 @@ session_start(); // Memulai atau melanjutkan sesi pengguna
 
 // Mengecek apakah form login telah dikirim
 if (isset($_POST['username']) && isset($_POST['password'])) {
-    $username = $_POST['username']; // Menangkap input username
-    $password = $_POST['password']; // Menangkap input password
+    $username = $_POST['username'];   // Menangkap input username
+    $password = $_POST['password'];   // Menangkap input password
 
     // Validasi sederhana: jika username & password cocok
     if ($username === "Nwraaq" && $password === "1") {
@@ -19,6 +19,10 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 <head>
     <title>::Login Page::</title>
     <style>
+        html, body {
+            overflow: hidden; /* ⛔ Mencegah scroll */
+        }
+
         /* Mengatur tampilan latar dan posisi form login */
         body {
             display: flex;

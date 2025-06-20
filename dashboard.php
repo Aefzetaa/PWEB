@@ -51,6 +51,10 @@ if (isset($_GET["Key"])) {
 <head>
     <title>::Login Page::</title>
     <style>
+        html, body {
+            overflow: hidden; /* ⛔ Mencegah scroll */
+        }
+        
         /* Style utama halaman */
         body {
             display: flex;
