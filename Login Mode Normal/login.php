@@ -85,7 +85,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             background-color: #4B0000;
         }
     </style>
-
     <script>
         // Menghapus data localStorage terkait musik setiap kali halaman dimuat
         localStorage.removeItem('musicTime');
@@ -95,15 +94,24 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
 <body>
     <!-- Video latar belakang -->
-    <video autoplay loop muted playsinline style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
-        <source src="https://cdn.pixabay.com/video/2020/03/13/33628-397860881_large.mp4" type="video/mp4">
+    <video
+        autoplay
+        loop
+        muted
+        playsinline
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+        <source
+            src="https://cdn.pixabay.com/video/2020/03/13/33628-397860881_large.mp4"
+            type="video/mp4" />
     </video>
 
     <!-- Form login -->
     <form action="login.php" method="post">
         <table>
             <tr>
-                <td colspan="2" style="text-align: center;"><strong>L O G I N</strong></td>
+                <td colspan="2" style="text-align: center;">
+                    <strong>L O G I N</strong>
+                </td>
             </tr>
             <tr>
                 <td>Username</td>
@@ -115,7 +123,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="checkbox" /> Ingatkan saya <!-- Tidak berfungsi, hanya visual -->
+                    <input type="checkbox" /> Ingatkan saya
+                    <!-- Tidak berfungsi, hanya visual -->
                 </td>
             </tr>
             <tr>
