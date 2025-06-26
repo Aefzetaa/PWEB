@@ -39,7 +39,7 @@ $target = "dashboard.php";
 
 // Jika ada parameter GET Key (edit mode), isi form dengan data yang ingin diedit
 if (isset($_GET["Key"])) {
-    $target = "Tools/Edit.php?Key=" . $_GET["Key"];
+    $target = "Alat Bantu/Tools/Edit.php?Key=" . $_GET["Key"];
     if ($_GET["Key"] != null) {
         $index = $_GET["Key"];
         $edit_daftar = $_SESSION["daftar"][$index];
@@ -48,11 +48,14 @@ if (isset($_GET["Key"])) {
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>::Login Page::</title>
     <style>
-        html, body {
-            overflow: hidden; /* ⛔ Mencegah scroll */
+        html,
+        body {
+            overflow: hidden;
+            /* ⛔ Mencegah scroll */
         }
 
         /* Style utama halaman */
@@ -116,6 +119,7 @@ if (isset($_GET["Key"])) {
         }
     </style>
 </head>
+
 <body>
     <!-- Video latar belakang -->
     <video autoplay loop muted playsinline style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
@@ -144,7 +148,7 @@ if (isset($_GET["Key"])) {
             <tr>
                 <td colspan="2" style="text-align: center;">
                     <button type="submit">SUBMIT</button>
-                    <a href="Tools/logout.php"><button id="logout" type="button">LOGOUT</button></a>
+                    <a href="Alat Bantu/Tools/logout.php"><button id="logout" type="button">LOGOUT</button></a>
                 </td>
             </tr>
         </table>
@@ -165,19 +169,19 @@ if (isset($_GET["Key"])) {
                 <td><?php echo htmlspecialchars($daftar["umur"]); ?></td>
                 <td>
                     <?php
-                        // Menentukan kategori umur berdasarkan nilai numerik
-                        $umur = $daftar['umur'];
-                        if ($umur <= 10) {
-                            echo "Anak-anak";
-                        } elseif ($umur <= 20) {
-                            echo "Remaja";
-                        } elseif ($umur <= 40) {
-                            echo "Dewasa";
-                        } elseif ($umur < 60) {
-                            echo "Tua";
-                        } else {
-                            echo "Lansia";
-                        }
+                    // Menentukan kategori umur berdasarkan nilai numerik
+                    $umur = $daftar['umur'];
+                    if ($umur <= 10) {
+                        echo "Anak-anak";
+                    } elseif ($umur <= 20) {
+                        echo "Remaja";
+                    } elseif ($umur <= 40) {
+                        echo "Dewasa";
+                    } elseif ($umur < 60) {
+                        echo "Tua";
+                    } else {
+                        echo "Lansia";
+                    }
                     ?>
                 </td>
                 <td style="text-align: center;">
@@ -186,19 +190,19 @@ if (isset($_GET["Key"])) {
                 </td>
                 <td style="text-align: center;">
                     <!-- Link hapus -->
-                    <a href="Tools/Delete.php?Key=<?php echo $index; ?>" style="color: red; font-size: 20px; text-decoration: none;">X</a>
+                    <a href="Alat Bantu/Tools/Delete.php?Key=<?php echo $index; ?>" style="color: red; font-size: 20px; text-decoration: none;">X</a>
                 </td>
             </tr>
         <?php endforeach; ?>
     </table>
 
     <!-- Musik latar belakang -->
-    <audio id="bg-music" src="Sound/Backsound Dashboard.mp3" autoplay loop></audio>
+    <audio id="bg-music" src="Alat Bantu/Sound/Backsound Dashboard.mp3" autoplay loop></audio>
     <button id="mute-button">🔊</button>
     <button id="pause-button">⏸️</button>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const music = document.getElementById("bg-music");
             const muteButton = document.getElementById("mute-button");
             const pauseButton = document.getElementById("pause-button");
@@ -232,4 +236,5 @@ if (isset($_GET["Key"])) {
         });
     </script>
 </body>
+
 </html>

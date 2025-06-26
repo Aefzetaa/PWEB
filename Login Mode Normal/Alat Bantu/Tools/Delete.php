@@ -5,5 +5,4 @@ $index = $_GET["Key"]; // Mengambil indeks data yang ingin dihapus dari paramete
 
 unset($_SESSION["daftar"][$index]); // Menghapus elemen pada array 'daftar' berdasarkan indeks tersebut
 
-header("Location: ../dashboard.php"); // Mengarahkan kembali ke halaman dashboard setelah proses hapus
-?>
+header("Location: ../../dashboard.php"); // Mengarahkan kembali ke halaman dashboard setelah proses hapus

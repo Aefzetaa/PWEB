@@ -16,11 +16,14 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>::Login Page::</title>
     <style>
-        html, body {
-            overflow: hidden; /* ⛔ Mencegah scroll */
+        html,
+        body {
+            overflow: hidden;
+            /* ⛔ Mencegah scroll */
         }
 
         /* Mengatur tampilan latar dan posisi form login */
@@ -59,7 +62,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         }
 
         /* Tombol mute dan pause audio */
-        #mute-button, #pause-button {
+        #mute-button,
+        #pause-button {
             position: fixed;
             right: 20px;
             padding: 10px;
@@ -88,6 +92,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         localStorage.removeItem('musicMuted');
     </script>
 </head>
+
 <body>
     <!-- Video latar belakang -->
     <video autoplay loop muted playsinline style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
@@ -122,14 +127,14 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     </form>
 
     <!-- Background music -->
-    <audio id="bg-music" src="Sound/Backsound Login.mp3" autoplay loop></audio>
+    <audio id="bg-music" src="Alat Bantu/Sound/Backsound Login.mp3" autoplay loop></audio>
 
     <!-- Tombol mute/pause musik -->
     <button id="mute-button">🔊</button>
     <button id="pause-button">⏸️</button>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const music = document.getElementById("bg-music");
             const muteButton = document.getElementById("mute-button");
             const pauseButton = document.getElementById("pause-button");
@@ -163,4 +168,5 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         });
     </script>
 </body>
+
 </html>

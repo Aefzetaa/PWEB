@@ -9,5 +9,4 @@ $_SESSION["daftar"]["$index"] = [
     "umur" => $_POST["umur"]    // Mengambil data umur dari input POST
 ];
 
-header("Location: ../dashboard.php"); // Mengarahkan kembali ke halaman dashboard setelah update
-?>
+header("Location: ../../dashboard.php"); // Mengarahkan kembali ke halaman dashboard setelah update
