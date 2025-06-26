@@ -1,2 +1,3 @@
-# ✨ Aefzetaa — *Top of the World* 
-> _"Elegance in every line. Precision in every step."_
+# ✨ Aefzetaa — _Top of the World_
+
+> _"Elegance in every line. Precision in .every step."_
