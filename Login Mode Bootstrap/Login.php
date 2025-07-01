@@ -1,3 +1,28 @@
+<?php
+session_start();
+
+if (isset($_POST['username']) && isset($_POST['password'])) {
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+
+  $dataFile = __DIR__ . '/Alat Bantu/Tools/HistoryUpdate.dat';
+  if (file_exists($dataFile)) {
+    $data = file_get_contents($dataFile);
+    $user = unserialize($data);
+    if (
+      $username === $user['username'] &&
+      password_verify($password, $user['password'])
+    ) {
+      $_SESSION['username'] = $username;
+      header("Location: Dashboard.php");
+      exit();
+    }
+  }
+
+  header("Location: login.php?error=1");
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
 
@@ -5,47 +30,36 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="" />
-  <meta
-    name="author"
-    content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
   <meta name="generator" content="Astro v5.9.2" />
   <title>Signin Template · Bootstrap v5.3</title>
-  <link
-    rel="canonical"
-    href="https://getbootstrap.com/docs/5.3/examples/sign-in/" />
-  <script src="/docs/5.3/assets/js/color-modes.js"></script>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/" />
+
   <link
     href="/docs/5.3/dist/css/bootstrap.min.css"
     rel="stylesheet"
     integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" />
-  <link
-    rel="apple-touch-icon"
-    href="/docs/5.3/assets/img/favicons/apple-touch-icon.png"
-    sizes="180x180" />
-  <link
-    rel="icon"
-    href="/docs/5.3/assets/img/favicons/favicon-32x32.png"
-    sizes="32x32"
-    type="image/png" />
-  <link
-    rel="icon"
-    href="/docs/5.3/assets/img/favicons/favicon-16x16.png"
-    sizes="16x16"
-    type="image/png" />
+  <link rel="stylesheet" href="Alat Bantu/Tools/Bootsrap 5/css/bootstrap.min.css" />
+  <link href="sign-in.css" rel="stylesheet" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/docs/5.3/assets/img/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/docs/5.3/assets/img/favicons/favicon-16x16.png" />
   <link rel="manifest" href="/docs/5.3/assets/img/favicons/manifest.json" />
-  <link
-    rel="mask-icon"
-    href="/docs/5.3/assets/img/favicons/safari-pinned-tab.svg"
-    color="#712cf9" />
+  <link rel="mask-icon" href="/docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9" />
   <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico" />
   <meta name="theme-color" content="#712cf9" />
-  <link href="sign-in.css" rel="stylesheet" />
+
   <style>
+    html,
+    body {
+      height: 100%;
+    }
+
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
       user-select: none;
     }
 
@@ -61,8 +75,7 @@
       background-color: #0000001a;
       border: solid rgba(0, 0, 0, 0.15);
       border-width: 1px 0;
-      box-shadow: inset 0 0.5em 1.5em #0000001a,
-        inset 0 0.125em 0.5em #00000026;
+      box-shadow: inset 0 0.5em 1.5em #0000001a, inset 0 0.125em 0.5em #00000026;
     }
 
     .b-example-vr {
@@ -123,11 +136,6 @@
       display: block !important;
     }
 
-    html,
-    body {
-      height: 100%;
-    }
-
     .form-signin {
       max-width: 330px;
       padding: 1rem;
@@ -148,81 +156,95 @@
       border-top-left-radius: 0;
       border-top-right-radius: 0;
     }
-  </style>
-  <script type="text/javascript">
-    (() => {
-      'use strict'
 
-      const getStoredTheme = () => localStorage.getItem('theme')
-      const setStoredTheme = theme => localStorage.setItem('theme', theme)
+    .alert {
+      transition: opacity 0.5s, transform 0.5s;
+    }
+
+    .alert.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .alert.hide {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  </style>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const getStoredTheme = () => localStorage.getItem('theme');
+      const setStoredTheme = (theme) => localStorage.setItem('theme', theme);
 
       const getPreferredTheme = () => {
-        const storedTheme = getStoredTheme()
+        const storedTheme = getStoredTheme();
         if (storedTheme) {
-          return storedTheme
+          return storedTheme;
         }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-      }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
 
-      const setTheme = theme => {
+      const setTheme = (theme) => {
         if (theme === 'auto') {
-          document.documentElement.setAttribute('data-bs-theme',
+          document.documentElement.setAttribute(
+            'data-bs-theme',
             window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-          )
+          );
         } else {
-          document.documentElement.setAttribute('data-bs-theme', theme)
+          document.documentElement.setAttribute('data-bs-theme', theme);
         }
-      }
-
-      setTheme(getPreferredTheme())
+      };
 
       const showActiveTheme = (theme, focus = false) => {
-        const themeSwitcher = document.querySelector('#bd-theme')
-        if (!themeSwitcher) return
+        const themeSwitcher = document.querySelector('#bd-theme');
+        if (!themeSwitcher) return;
 
-        const themeSwitcherText = document.querySelector('#bd-theme-text')
-        const activeThemeIcon = document.querySelector('.theme-icon-active use')
-        const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-        const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href')
+        const themeSwitcherText = document.querySelector('#bd-theme-text');
+        const activeThemeIcon = document.querySelector('.theme-icon-active use');
+        const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`);
+        const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href');
 
-        document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-          element.classList.remove('active')
-          element.setAttribute('aria-pressed', 'false')
-        })
+        document.querySelectorAll('[data-bs-theme-value]').forEach((el) => {
+          el.classList.remove('active');
+          el.setAttribute('aria-pressed', 'false');
+        });
 
-        btnToActive.classList.add('active')
-        btnToActive.setAttribute('aria-pressed', 'true')
-        activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+        btnToActive.classList.add('active');
+        btnToActive.setAttribute('aria-pressed', 'true');
+        activeThemeIcon.setAttribute('href', svgOfActiveBtn);
 
-        const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
-        themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
+        const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`;
+        themeSwitcher.setAttribute('aria-label', themeSwitcherLabel);
 
-        if (focus) themeSwitcher.focus()
-      }
+        if (focus) themeSwitcher.focus();
+      };
+
+      setTheme(getPreferredTheme());
 
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-        const storedTheme = getStoredTheme()
+        const storedTheme = getStoredTheme();
         if (storedTheme !== 'light' && storedTheme !== 'dark') {
-          setTheme(getPreferredTheme())
+          setTheme(getPreferredTheme());
         }
-      })
+      });
 
       window.addEventListener('DOMContentLoaded', () => {
-        showActiveTheme(getPreferredTheme())
+        showActiveTheme(getPreferredTheme());
 
-        document.querySelectorAll('[data-bs-theme-value]')
-          .forEach(toggle => {
-            toggle.addEventListener('click', () => {
-              const theme = toggle.getAttribute('data-bs-theme-value')
-              setStoredTheme(theme)
-              setTheme(theme)
-              showActiveTheme(theme, true)
-            })
-          })
-      })
-    })()
+        document.querySelectorAll('[data-bs-theme-value]').forEach((toggle) => {
+          toggle.addEventListener('click', () => {
+            const theme = toggle.getAttribute('data-bs-theme-value');
+            setStoredTheme(theme);
+            setTheme(theme);
+            showActiveTheme(theme, true);
+          });
+        });
+      });
+    })();
   </script>
-  <link rel="stylesheet" href="Alat Bantu/Tools/Bootsrap 5/css/bootstrap.min.css" />
 </head>
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
@@ -311,7 +333,7 @@
     </ul>
   </div>
   <main class="form-signin w-100 m-auto">
-    <form>
+    <form action="login.php" method="post">
       <div class="text-center">
         <img
           class="mb-4"
@@ -322,21 +344,31 @@
       </div>
       <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
       <div class="form-floating">
-        <input
-          type="email"
-          class="form-control"
-          id="floatingInput"
-          placeholder="name@example.com" />
-        <label for="floatingInput">Email address</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Username" />
+        <label for="username">Username</label>
       </div>
       <div class="form-floating">
-        <input
-          type="password"
-          class="form-control"
-          id="floatingPassword"
-          placeholder="Password" />
-        <label for="floatingPassword">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+        <label for="password">Password</label>
       </div>
+      <?php if (isset($_GET['error'])): ?>
+        <div id="login-alert" class="alert alert-danger alert-dismissible fade show small py-1 px-2 mt-2 mb-2" role="alert">
+          <strong class="fw-semibold">Login gagal!</strong>
+        </div>
+        <script>
+          setTimeout(function() {
+            var alert = document.getElementById('login-alert');
+            if (alert) {
+              alert.classList.remove('show');
+              alert.classList.add('hide');
+              setTimeout(function() {
+                var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                bsAlert.close();
+              }, 500);
+            }
+          }, 2000);
+        </script>
+      <?php endif; ?>
       <div class="form-check text-start my-3">
         <input
           class="form-check-input"
