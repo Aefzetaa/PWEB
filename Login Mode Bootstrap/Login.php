@@ -5,17 +5,21 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  $dataFile = __DIR__ . '/Alat Bantu/Tools/HistoryUpdate.dat';
+  $dataFile = __DIR__ . '/Alat Bantu/Tools/HistoryRegistry.dat';
   if (file_exists($dataFile)) {
     $data = file_get_contents($dataFile);
-    $user = unserialize($data);
-    if (
-      $username === $user['username'] &&
-      password_verify($password, $user['password'])
-    ) {
-      $_SESSION['username'] = $username;
-      header("Location: Dashboard.php");
-      exit();
+    $users = json_decode($data, true);
+    if (is_array($users)) {
+      foreach ($users as $user) {
+        if (
+          $username === $user['username'] &&
+          password_verify($password, $user['password'])
+        ) {
+          $_SESSION['username'] = $username;
+          header("Location: Dashboard.php");
+          exit();
+        }
+      }
     }
   }
 
@@ -382,7 +386,10 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
       <button class="btn btn-primary w-100 py-2" type="submit">
         Sign in
       </button>
-      <p class="mt-5 mb-3 text-body-secondary">&copy; 2017 - 2025</p>
+      <div class="text-center mt-2 mb-2">
+        <span>Belum memiliki akun? <a href="Alat Bantu/Tools/Registry.php" class="link-primary">Daftar sekarang</a></span>
+      </div>
+      <p class="mt-5 mb-3 text-body-secondary">&copy; Aefzetaa Group</p>
     </form>
   </main>
   <script

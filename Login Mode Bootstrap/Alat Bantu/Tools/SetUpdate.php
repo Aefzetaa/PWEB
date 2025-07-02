@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-$dataFile = __DIR__ . '/HistoryUpdate.dat';
+$registryFile = __DIR__ . '/HistoryRegistry.dat';
+$updateFile = __DIR__ . '/HistoryUpdate.dat';
 
 function getUserData($file)
 {
@@ -21,19 +22,67 @@ function saveUserData($file, $username, $password)
     file_put_contents($file, serialize($data));
 }
 
-$user = getUserData($dataFile);
 $message = '';
+$oldUsername = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_account'])) {
+    if ($oldUsername) {
+        $users = [];
+        if (file_exists($registryFile)) {
+            $users = json_decode(file_get_contents($registryFile), true);
+        }
+        $users = array_filter($users, function ($user) use ($oldUsername) {
+            return $user['username'] !== $oldUsername;
+        });
+        file_put_contents($registryFile, json_encode(array_values($users), JSON_PRETTY_PRINT));
+    }
+    session_destroy();
+    header("Location: ../../Login.php?deleted=1");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newUser = trim($_POST['username']);
     $newPass = $_POST['password'];
     if ($newUser && $newPass) {
-        saveUserData($dataFile, $newUser, $newPass);
-        $message = "Berhasil diubah!";
+        $users = [];
+        if (file_exists($registryFile)) {
+            $users = json_decode(file_get_contents($registryFile), true);
+        }
+        $found = false;
+        foreach ($users as &$user) {
+            if ($user['username'] === $oldUsername) {
+                $user['username'] = $newUser;
+                $user['password'] = password_hash($newPass, PASSWORD_DEFAULT);
+                $found = true;
+                break;
+            }
+        }
+        unset($user);
+        if (!$found) {
+            $users[] = [
+                'username' => $newUser,
+                'password' => password_hash($newPass, PASSWORD_DEFAULT)
+            ];
+        }
+        file_put_contents($registryFile, json_encode($users, JSON_PRETTY_PRINT));
+
+        saveUserData($updateFile, $newUser, $newPass);
         $_SESSION['username'] = $newUser;
+
+        $message = "Berhasil diubah!";
+        $user = [
+            'username' => $newUser,
+            'password' => ''
+        ];
     } else {
         $message = "Username dan password tidak boleh kosong!";
     }
+} else {
+    $user = [
+        'username' => '',
+        'password' => ''
+    ];
 }
 ?>
 <!DOCTYPE html>
@@ -164,6 +213,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button class="btn btn-primary w-100" type="submit">Simpan</button>
                 <a href="../../Dashboard.php" class="btn btn-link dashboard-back w-100 mt-2">Kembali ke Dashboard</a>
             </form>
+        </div>
+    </div>
+    <button
+        id="deleteAccountBtn"
+        type="button"
+        style="
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 9999;
+        background: #f8f9fa;
+        color: #dc3545;
+        border: none;
+        border-radius: 32px;
+        box-shadow: 0 2px 8px #0002;
+        padding: 10px 18px 10px 12px;
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: box-shadow 0.2s;
+    "
+        data-bs-toggle="modal"
+        data-bs-target="#deleteAccountModal">
+        <svg width="24" height="24" fill="none" style="margin-right:8px;" viewBox="0 0 24 24">
+            <path d="M3 21V3h13v18" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16 17h5v-10h-5" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="8.5" cy="12" r="1.5" fill="#dc3545" />
+        </svg>
+        Delete Account
+    </button>
+    <form id="deleteAccountForm" method="post" style="display:none;">
+        <input type="hidden" name="delete_account" value="1">
+    </form>
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background:#23272f; color:#fff; border-radius:18px;">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="deleteAccountModalLabel">
+                        <svg width="28" height="28" fill="none" style="margin-right:8px;vertical-align:-6px;" viewBox="0 0 24 24">
+                            <path d="M3 21V3h13v18" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M16 17h5v-10h-5" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="8.5" cy="12" r="1.5" fill="#dc3545" />
+                        </svg>
+                        Delete Account
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p style="font-size:1.1rem;">Are you sure you want to <span style="color:#dc3545;font-weight:600;">delete</span> your account?</p>
+                    <p style="font-size:0.98rem;opacity:0.7;">This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger px-4" onclick="document.getElementById('deleteAccountForm').submit();">Yes, Delete</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="../Tools/Bootsrap 5/js/bootstrap.bundle.min.js"></script>
