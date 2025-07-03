@@ -1,6 +1,6 @@
 <?php
 session_start();
-$dataFile = __DIR__ . '/HistoryRegistry.dat';
+$dataFile = __DIR__ . '/Data Users/HistoryRegistry.dat';
 
 function getUsers($file)
 {
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             saveUsers($dataFile, $users);
             $message = "Akun berhasil dibuat! Silakan login.";
             $success = true;
-            $updateFile = __DIR__ . '/HistoryUpdate.dat';
+            $updateFile = __DIR__ . '/Data Users/HistoryUpdate.dat';
             file_put_contents($updateFile, serialize([
                 'username' => $username,
                 'password' => end($users)['password']

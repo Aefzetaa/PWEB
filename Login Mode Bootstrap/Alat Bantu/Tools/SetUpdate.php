@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-$registryFile = __DIR__ . '/HistoryRegistry.dat';
-$updateFile = __DIR__ . '/HistoryUpdate.dat';
+$registryFile = __DIR__ . '/Data Users/HistoryRegistry.dat';
+$updateFile = __DIR__ . '/Data Users/HistoryUpdate.dat';
 
 function getUserData($file)
 {

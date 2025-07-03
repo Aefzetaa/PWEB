@@ -5,7 +5,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  $dataFile = __DIR__ . '/Alat Bantu/Tools/HistoryRegistry.dat';
+  $dataFile = __DIR__ . '/Alat Bantu/Tools/Data Users/HistoryRegistry.dat';
   if (file_exists($dataFile)) {
     $data = file_get_contents($dataFile);
     $users = json_decode($data, true);
