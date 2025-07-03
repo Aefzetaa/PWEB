@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Registrasi Akun</title>
-    <link rel="stylesheet" href="../../Tools/Bootsrap 5/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="Bootsrap 5/css/bootstrap.min.css" />
     <style>
         html,
         body {
@@ -261,7 +261,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="../../Login.php" class="btn btn-link center-back w-100 mt-3">Sudah punya akun? Login</a>
         </form>
     </div>
-    <script src="../../Tools/Bootsrap 5/js/bootstrap.bundle.min.js"></script>
+    <script src="Bootsrap 5/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

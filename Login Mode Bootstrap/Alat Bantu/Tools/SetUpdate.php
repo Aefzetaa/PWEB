@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="utf-8" />
     <title>Pengaturan Akun</title>
-    <link rel="stylesheet" href="../Tools/Bootsrap 5/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="Bootsrap 5/css/bootstrap.min.css" />
     <style>
         html,
         body {
@@ -273,7 +273,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-    <script src="../Tools/Bootsrap 5/js/bootstrap.bundle.min.js"></script>
+    <script src="Bootsrap 5/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
