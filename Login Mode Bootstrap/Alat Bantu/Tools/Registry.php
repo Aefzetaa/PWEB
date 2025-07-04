@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'username' => $username,
                 'password' => end($users)['password']
             ]));
+            header("Refresh: 2; URL=../../Login.php");
         }
     } else {
         $message = "Username dan password wajib diisi!";
